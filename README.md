@@ -26,6 +26,7 @@ To get up and running:
 3) put the config.ovpn and pass.txt files in-place in the openvpn directory. 
 
 4) run `sudo docker-compose up` to test it works.  Access the web UI with http://_host_:8112
+   The default password is _deluge_.
 
 5) stop, and re-run with `sudo docker-compose up -d` - this will create these containers as 
    self-restarting daemons, even if you reboot - no need to mess around with systemd.
