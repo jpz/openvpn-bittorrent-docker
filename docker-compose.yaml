@@ -1,0 +1,46 @@
+version: '2'
+services:
+        openvpn:
+                build: openvpn
+                # required additional permissions for openvpn to run
+                cap_add: 
+                        - net_admin 
+                # required additional permissions for openvpn to run
+                devices:
+                        - /dev/net/tun
+                restart: always
+        deluge:
+                build: deluge
+                depends_on:
+                        - openvpn
+                volumes:
+                        # mount config externally so it's persistent
+                        - /etc/deluge:/root/.config
+                        # mount location of where we download files to
+                        - /content:/content
+                network_mode: "service:openvpn"
+                restart: always
+        # small proxy server to expose the web application of deluge
+        http_proxy:
+                build: tcpproxy
+                depends_on:
+                        - openvpn
+                        - deluge
+                links:
+                        - openvpn:deluge
+                ports:
+                        - "8112:8112"
+                command: 8112 openvpn 8112
+                restart: always
+        # small proxy server to expose the tcp address of deluged 
+        ctrl_proxy:
+                build: tcpproxy
+                depends_on:
+                        - openvpn
+                        - deluge
+                links:
+                        - openvpn:deluge
+                ports:
+                        - "58846:58846"
+                command: 58846 openvpn 58846
+                restart: always
