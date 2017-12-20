@@ -1,4 +1,4 @@
-FROM resin/rpi-raspbian
+FROM debian:stretch-slim
 
 # creating this volume means that we capture the default config 
 # in this location.

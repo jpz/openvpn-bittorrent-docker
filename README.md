@@ -1,15 +1,20 @@
-# BitTorrent and OpenVPN docker-compose setup on raspberry pi 3
+# BitTorrent and OpenVPN docker-compose
 
-This repo is a small setup for running bittorrent through OpenVPN on a Raspberry PI.
+This repo is a small setup for running bittorrent through OpenVPN.
 
-I've used ExpressVPN OpenVPN config to do this, and the deluge client / server.
+For the bittorrent server, I've selected [Deluge](http://deluge-torrent.org/).
 
-Note that I needed the tcpproxy for obscure reasons I do not fully understand,
-but without it, I was not able to open up access to the ports of deluge outside
-of the localhost with the ports command of docker.
+It has been tested on a Raspberry PI using ExpressVPN, but should work on other hardware, as it uses
+debian multi-architecture base images.
 
-I've left in an incomplete docker set up for transmission, as I'd like to 
-get Transmission working in the future, and replace deluged.
+On the OpenVPN provider side of things, I've tested it with ExpressVPN config.
+
+Note that I needed the tcpproxy to expose the ports of the deluge docker machine.  For reasons 
+I do not fully understand, I was not able to export the ports of deluge service outside of the 
+localhost, and so needed to forward the tcp/ip ports in this manner.
+
+I've left an incomplete Dockerfile set up for transmission, as I'd like to get Transmission working 
+in the future, and replace deluged.
 
 To get up and running:
 
